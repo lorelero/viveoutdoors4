@@ -44,9 +44,7 @@ const CustomNavbar = () => {
             <Nav.Link as={Link} to="/carpas">
               Carpas
             </Nav.Link>
-            <Nav.Link as={Link} to="/mochilas">
-              Mochilas
-            </Nav.Link>
+            <Nav.Link href="/CategoriaMochilas"> Mochilas</Nav.Link>
             <Nav.Link href="/CategorySacos">Sacos & Colchonetas</Nav.Link>
             <Nav.Link as={Link} to="/accesorios">
               Accesorios

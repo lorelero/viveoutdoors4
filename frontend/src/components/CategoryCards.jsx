@@ -16,7 +16,7 @@ const CategoryCards = () => {
       title: "Mochilas",
       description: "Equipate con la mochila ideal.",
       imgSrc: "./categorias_moch.png",
-      link: "/mochilas", // Ruta para Mochilas
+      link: "/CategoriaMochilas", // Ruta para Mochilas
     },
     {
       title: "Sacos & Colchonetas",
