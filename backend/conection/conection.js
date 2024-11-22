@@ -14,7 +14,7 @@ const pool = new Pool({
   port: PORT || 5432,
   allowExitOnIdle: true, // permite que la aplicación se cierre incluso si hay conexiones inactivas en el pool.
 });
-
+console.log("es de pool", pool)
 const testConnection = async () => {
   try {
     await pool.connect();
