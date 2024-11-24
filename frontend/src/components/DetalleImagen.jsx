@@ -201,3 +201,114 @@ const DetalleImagen = () => {
 };
 
 export default DetalleImagen;
+
+/*import React, { useContext } from "react";
+import { useParams, useNavigate, useEffect, useState } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import axios from "axios";
+import "../styles.css";
+
+
+
+const DetalleVista = () => {
+  const { imagenId } = useParams();
+  const navigate = useNavigate();
+  const { agregarCarrito } = useCart(); // Usar el contexto del carrito
+  const [producto, setProducto] = useState(null);
+  const [loading, setloading]= useState(true);
+
+  useEffect(() => {
+    const fetchProducto = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/productos");
+        const productos = response.data;
+        const foundProducto = productos.find(
+          (p) => p.id === parseInt(imagenId)
+        );
+        setProducto(foundProducto);
+      } catch (error) {
+        console.error("Error al obtener el producto:", error);
+     } finally {
+        setLoading(false); // Cambiar el estado de carga
+      }
+    };
+
+    fetchProducto();
+  }, [imagenId]);
+
+  if (!producto) {
+    return <div>Producto no encontrado.</div>;
+  }
+
+  const irACategoria = () => {
+    navigate("/CategorySacos");
+  };
+
+  const irAHome = () => {
+    navigate("/");
+  };
+
+  const agregarAlCarrito = () => {
+    agregarCarrito(producto); // Agregar el producto al carrito
+    alert(`Agregado al carrito: ${producto.titulo} por ${producto.precio}`);
+  };
+
+  const productoAnterior = producto.id > 0 ? producto.id - 1 : 0;
+  const productoSiguiente = producto.id < 15 ? producto.id + 1 : 15; // Cambia 15 por la cantidad total de productos
+
+  return (
+    <div className="container my-5">
+      {/* Submenú }
+      <div className="mb-4">
+        <button
+          className="btn btn-link"
+          style={{ color: "gray" }}
+          onClick={irAHome}
+        >
+          Home/
+        </button>
+        <button
+          className="btn btn-link"
+          style={{ color: "orange", marginLeft: "-15px" }}
+          onClick={irACategoria}
+        >
+          Volver a Sacos y Colchonetas
+        </button>
+      </div>
+
+      <div className="row">
+        <div className="col-12 col-md-6">
+          <img
+            src={producto.imagen}
+            className="img-fluid"
+            alt={producto.titulo}
+          />
+        </div>
+        <div className="col-12 col-md-6">
+          <h2 className="font-weight-bold">{producto.titulo}</h2>
+          <p>{producto.detalle}</p>
+          <h4 className="font-weight-bold">{producto.precio}</h4>
+          <button className="btn btn-dark" onClick={agregarAlCarrito}>
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
+      <div className="d-flex justify-content-between my-4">
+        <button
+          className="btn btn-secondary"
+          onClick={() => navigate(`/detalle/${productoAnterior}`)}
+        >
+          Atrás
+        </button>
+        <button
+          className="btn btn-secondary"
+          onClick={() => navigate(`/detalle/${productoSiguiente}`)}
+        >
+          Adelante
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default DetalleVista; */
