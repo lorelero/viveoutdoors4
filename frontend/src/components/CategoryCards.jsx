@@ -1,59 +1,92 @@
-import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+
+import { Row, Col, Button, Card,  } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const CategoryCards = () => {
-  const navigate = useNavigate();
+  const [productosCategoria, setProductosCategoria] = useState([]); //inicialmente es un arreglo vacío
 
-  const categories = [
-    {
-      title: "Carpas",
-      description: "Encuentra tu carpa.",
-      imgSrc: "./categorias_carpa.png",
-      link: "/carpas", // Ruta para Carpas
-    },
-    {
-      title: "Mochilas",
-      description: "Equipate con la mochila ideal.",
-      imgSrc: "./categorias_moch.png",
-      link: "/CategoriaMochilas", // Ruta para Mochilas
-    },
-    {
-      title: "Sacos & Colchonetas",
-      description: "Todo para dormir.",
-      imgSrc: "./categorias_saco.png",
-      link: "/CategorySacos", // Ruta para Sacos & Colchonetas
-    },
-    {
-      title: "Accesorios",
-      description: "Equipamiento para tus actividades.",
-      imgSrc: "./categorias_acc.png",
-      link: "/accesorios", // Ruta para Accesorios
-    },
-  ];
+  const obtenerCategoryCards = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/categoriashome");
+      setProductosCategoria(response.data || []);
+      console.log("Productos por categoria obtenidos para el Home:", response.data);
+    } catch (error) {
+      console.error("Error al obtener las publicaciones:", error);
+    }
+  };
+  // Función para obtener datos desde el backend
+  useEffect(() => {
+    // se ejecuta después del primer renderizado del componente.
+    obtenerCategoryCards();
+  }, []);
+
 
   return (
-    <Row className="mt-4">
-      {categories.map((category, index) => (
-        <Col md={3} key={index} className="mb-4">
-          <Card>
-            <Card.Img variant="top" src={category.imgSrc} />
-            <Card.Body>
-              <Card.Title>{category.title}</Card.Title>
-              <Card.Text>{category.description}</Card.Text>
-              {/* Modificación aquí para usar navigate */}
-              <Card.Link
-                href="#"
-                onClick={() => navigate(category.link)} // Navegar a la ruta correspondiente
-              >
-                Ver más
-              </Card.Link>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  );
+
+<><Row className="mt-5">
+    <Col md={12}>
+            {/* Productos en el lado derecho */}
+            <Row lg={4} md={4} sm={12}>
+              {Array.isArray(productosCategoria) && productosCategoria.length > 0 ? (
+                productosCategoria.map((producto) => (
+                  <Col key={producto.id_producto} className="mb-3">
+                    <Card
+                      style={{
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Card.Img
+                        style={{
+                          objectFit: "contain",
+                          width: "100%",
+                          height: "100px",
+                          margin: "0px",
+                        }}
+                        src={producto.imagen_url}
+                      />
+                      <Card.Body
+                        style={{ 
+                          padding: "10px",
+                          flex: "1", //ocupa el espacio restante de la card
+                          display: "flex",
+                          flexDirection: "column", // organización vertical
+                          justifyContent: "space-between", // distribución uniforme dentro del card
+                        }}
+                      >
+                       
+                       
+                        <Card.Title  className="text-center" style={{ fontSize: "22px"  }}>
+                        {producto.categoria_nombre}
+                        </Card.Title>
+                      
+
+                        <Button
+                          style={{
+                            width: "100%",  // Botón ocupa todo el ancho
+                            margin: "0 auto",
+                            whiteSpace: "nowrap", // Evita que el texto del botón se corte
+                            fontSize: "14px",
+                          }}
+                          variant="outline-warning text-black"
+                          onClick={() => (window.location.href = "/tienda")}
+                        >
+                          Ver Mas
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                ))
+              ) : (
+                <p>No hay publicaciones disponibles.</p>
+              )}
+            </Row>
+          </Col></Row>
+          </>
+          );
 };
 
 export default CategoryCards;

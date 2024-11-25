@@ -8,12 +8,11 @@ import Home from "./pages/Home";
 import AdminDashboard from "./pages/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import CustomNavbar from "./components/Navbar";
-import Account from "./components/Account";
+
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
-import CategorySacos from "./pages/CategorySacos";
-import DetalleImagen from "./components/DetalleImagen";
-import CategoriaMochilas from "./pages/CategoriaMochilas";
-import DetalleImagen2 from "./components/DetalleImagen2";
+import Tienda from "./pages/Tienda";
+import Carrito from "./pages/Carrito";
 
 const App = () => {
   return (
@@ -25,10 +24,8 @@ const App = () => {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/user" element={<UserDashboard />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/CategorySacos" element={<CategorySacos />} />
-          <Route path="/detalle/:imagenId" element={<DetalleImagen />} />
-          <Route path="/CategoriaMochilas" element={<CategoriaMochilas />} />
-          <Route path="/detalle2/:imagenId" element={<DetalleImagen2 />} />
+          <Route path="/tienda" element={<Tienda />} />
+          <Route path="/cart" element={<Carrito />} />
           <Route path="*" element={<NotFound />} />{" "}
           {/* Ruta para manejar errores */}
         </Routes>
