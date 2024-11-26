@@ -33,13 +33,29 @@ const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || nul
       setId_usuario(storedUser.id_usuario); // Actualiza id_usuario explícitamente
     } else {
       console.warn("Datos incompletos en localStorage.");
-      setUser(null);
+      resetAuthState();
+    /*   setUser(null);
       setToken(null);
       setIsAuthenticated(false);
       setRol(null);
-      setId_usuario(null);
+      setId_usuario(null); */
     }
   }, []);
+
+  useEffect(() => {
+    // Guarda los datos en localStorage cuando cambian
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("id_usuario", id_usuario);
+  }, [user, token, id_usuario]);
+
+  const resetAuthState = () => {
+    setUser(null);
+    setToken(null);
+    setIsAuthenticated(false);
+    setRol(null);
+    setId_usuario(null);
+  };
 
   const login = async (email, password) => {
     try {
@@ -51,48 +67,38 @@ const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || nul
       setIsAuthenticated(true); 
       setRol(user.rol);
       setId_usuario(user.id_usuario);
-
-    localStorage.setItem("user", JSON.stringify(user)); 
-    localStorage.setItem("token",token);
-    return true;
+      return true;
     } catch (error) {
-      console.error("Error al iniciar sesión:", error); 
-      alert("Credenciales incorrectas, intente de nuevo"); 
+      console.error("Error al iniciar sesión:", error);
+      alert("Credenciales incorrectas, intente de nuevo");
       return false;
     }
   };
-  
 
-  const logout = () => { 
-    setUser(null); 
-    setToken(null); 
-    setIsAuthenticated(false); 
-    setRol(null); 
-    setId_usuario(null);
-    localStorage.removeItem("user"); 
-    localStorage.removeItem("token"); 
-    navigate("/login"); 
+  const logout = () => {
+    resetAuthState();
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("id_usuario");
+    navigate("/login");
   };
 
   const register = async (newUser) => {
-try{
-  const response = await axios.post("/registro", newUser); 
-  const { user, token } = response.data; 
-  setUser(user); 
-  setToken(token); 
-  setIsAuthenticated(true); 
-  setRol(user.rol); 
-setId_usuario(user.id_usuario);
+    try {
+      const response = await axios.post("/registro", newUser);
+      const { user, token } = response.data;
 
-  localStorage.setItem("user", JSON.stringify(user)); 
-  localStorage.setItem("token", token); 
-
-  return true;
-} catch (error) {
-  console.error("Error al registrar usuario: ", error);
-  return false;
-}
-};
+      setUser(user);
+      setToken(token);
+      setIsAuthenticated(true);
+      setRol(user.rol);
+      setId_usuario(user.id_usuario);
+      return true;
+    } catch (error) {
+      console.error("Error al registrar usuario: ", error);
+      return false;
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -100,7 +106,7 @@ setId_usuario(user.id_usuario);
         user,
         isAuthenticated,
         token,
-        rol, // Exponemos el rol para usarlo en otros componentes
+        rol,
         id_usuario,
         login,
         logout,

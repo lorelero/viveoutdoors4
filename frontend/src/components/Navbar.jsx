@@ -50,7 +50,7 @@ const CustomNavbar = () => {
               Accesorios
             </Nav.Link>
           </Nav>
-          <Form inline className="ml-3">
+          <Form inline="true"  className="ml-3">
             <div className="d-flex m-2">
               <FormControl
                 type="text"
